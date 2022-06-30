@@ -3,7 +3,7 @@ import logging.config
 
 
 class FileReader:
-    logging.config.fileConfig('./resources/configs/logging.conf')
+    logging.config.fileConfig('./processor/resources/configs/logging.conf')
     logger = logging.getLogger('Ingest')
 
     def __init__(self, file_type):
