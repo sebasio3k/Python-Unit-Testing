@@ -1,12 +1,12 @@
 import logging
 import logging.config
 
-from ingest import FileReader
-from persist import PersistData
+from processor.ingest import FileReader
+from processor.persist import PersistData
 
 
 class DriverProgram:
-    logging.config.fileConfig('./resources/configs/logging.conf')
+    logging.config.fileConfig('./processor/resources/configs/logging.conf')
 
     def __init__(self, file_type):
         logging.debug('I am within the constructor')
