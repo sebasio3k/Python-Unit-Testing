@@ -4,6 +4,30 @@ import logging.config
 from processor.ingest import FileReader
 from processor.persist import PersistData
 
+from flask import Flask, request
+
+app = Flask(__name__)
+
+
+@app.route('/courses', methods=['GET'])
+def get_courses():
+    dbObject = PersistData('postgres')
+    courses = dbObject.read_from_pg('futurexschema.futurex_course_catalog')
+    return f'Courses are - {courses}'
+
+
+@app.route('/courses', methods=['POST'])
+def insert_course():
+    input_json = request.get_json(force=True)
+    print(f'input_json > {input_json}')
+    dbObject = PersistData('postgres')
+    dbObject.write_from_json_to_pg(
+        'futurexschema.futurex_course_catalog',
+        input_json
+    )
+
+    return 'Success'
+
 
 class DriverProgram:
     logging.config.fileConfig('./processor/resources/configs/logging.conf')
@@ -23,5 +47,6 @@ class DriverProgram:
 
 
 if __name__ == '__main__':
-    driver = DriverProgram('jso')
-    driver.my_function()
+    app.run(port=8005, debug=True)
+    # driver = DriverProgram('jso')
+    # driver.my_function()
