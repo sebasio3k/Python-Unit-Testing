@@ -15,12 +15,13 @@ class DriverProgram:
     def my_function(self):
         logging.debug(f'inside my function. Processing {self.file_type} file')
         reader = FileReader(self.file_type)
-        reader.read_file()
+        read_json = reader.read_file()
+        print(f'read the json {read_json}')
 
         writer = PersistData('Postgres')
-        writer.store_data()
+        writer.store_data(read_json)
 
 
 if __name__ == '__main__':
-    driver = DriverProgram('csv')
+    driver = DriverProgram('jso')
     driver.my_function()
